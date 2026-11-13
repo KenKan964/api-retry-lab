@@ -1,0 +1,56 @@
+{
+  "scenario": "three_same_key_requests",
+  "expected": {
+    "effects": 1,
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "replays": 2
+  },
+  "human_work_seconds": null,
+  "measure_kind": "executed scripted file changes and command counts; not human observations",
+  "arms": {
+    "arl": {
+      "passed": true,
+      "edited_files": 1,
+      "verification_command_invocations": 1,
+      "code_delta": {
+        "added_physical_lines": 6,
+        "removed_physical_lines": 0
+      },
+      "configuration_delta": {
+        "added_physical_lines": 0,
+        "removed_physical_lines": 0
+      },
+      "environment_setup": {
+        "python_runtimes_required": 1,
+        "pip_packages": 0,
+        "external_services": 0,
+        "install_commands_after_python": 0
+      },
+      "manual_operations_measured": null
+    },
+    "oss": {
+      "passed": true,
+      "edited_files": 1,
+      "verification_command_invocations": 1,
+      "code_delta": {
+        "added_physical_lines": 0,
+        "removed_physical_lines": 0
+      },
+      "configuration_delta": {
+        "added_physical_lines": 23,
+        "removed_physical_lines": 0
+      },
+      "environment_setup": {
+        "python_runtimes_required": 1,
+        "pip_packages": 0,
+        "external_services": 0,
+        "install_commands_after_python": 0
+      },
+      "manual_operations_measured": null
+    }
+  }
+}

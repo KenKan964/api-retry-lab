@@ -1,0 +1,51 @@
+test_429_invalid (test_acceptance.Acceptance.test_429_invalid) ... ok
+test_429_valid (test_acceptance.Acceptance.test_429_valid) ... ok
+test_503_after (test_acceptance.Acceptance.test_503_after) ... ok
+test_503_before (test_acceptance.Acceptance.test_503_before) ... ok
+test_before_apply (test_acceptance.Acceptance.test_before_apply) ... ok
+test_before_send (test_acceptance.Acceptance.test_before_send) ... ok
+test_connection_refused (test_acceptance.Acceptance.test_connection_refused) ... ok
+test_duplicate_mutant (test_acceptance.Acceptance.test_duplicate_mutant) ... ok
+test_empty_key (test_acceptance.Acceptance.test_empty_key) ... ok
+test_false_mutant (test_acceptance.Acceptance.test_false_mutant) ... ok
+test_missing_key (test_acceptance.Acceptance.test_missing_key) ... ok
+test_normal (test_acceptance.Acceptance.test_normal) ... ok
+test_parallel (test_acceptance.Acceptance.test_parallel) ... ok
+test_payload_conflict (test_acceptance.Acceptance.test_payload_conflict) ... ok
+test_payload_mutant (test_acceptance.Acceptance.test_payload_mutant) ... ok
+test_readback_unavailable (test_acceptance.Acceptance.test_readback_unavailable) ... ok
+test_response_lost_after_commit (test_acceptance.Acceptance.test_response_lost_after_commit) ... ok
+test_restart_conflict (test_acceptance.Acceptance.test_restart_conflict) ... ok
+test_restart_replay (test_acceptance.Acceptance.test_restart_replay) ... ok
+test_safe_replay (test_acceptance.Acceptance.test_safe_replay) ... ok
+test_sequential (test_acceptance.Acceptance.test_sequential) ... ok
+test_timeout (test_acceptance.Acceptance.test_timeout) ... ok
+test_unsafe_retry (test_acceptance.Acceptance.test_unsafe_retry) ... ok
+test_false_expected (test_acceptance.NegativeControl.test_false_expected) ... ok
+test_forged_count (test_acceptance.NegativeControl.test_forged_count) ... ok
+test_existing (test_acceptance.Output.test_existing) ... ok
+test_duplicate (test_baseline.Baseline.test_duplicate) ... ok
+test_independent_imports (test_baseline.Baseline.test_independent_imports) ... ok
+test_normal_replay (test_baseline.Baseline.test_normal_replay) ... ok
+test_payload_conflict (test_baseline.Baseline.test_payload_conflict) ... ok
+test_response_loss (test_baseline.Baseline.test_response_loss) ... ok
+test_check_timeout (test_fix01.Failures.test_check_timeout) ... ok
+test_child_crash (test_fix01.Failures.test_child_crash) ... ok
+test_output_write (test_fix01.Failures.test_output_write) ... ok
+test_port_init (test_fix01.Failures.test_port_init) ... ok
+test_spawn (test_fix01.Failures.test_spawn) ... ok
+test_existing_preserved (test_fix01.Rejects.test_existing_preserved) ... ok
+test_internal_start_without_ownership (test_fix01.Rejects.test_internal_start_without_ownership) ... ok
+test_output_parent_missing (test_fix01.Rejects.test_output_parent_missing) ... ok
+test_date (test_fix01.RetryAfter.test_date) ... ok
+test_empty (test_fix01.RetryAfter.test_empty) ... ok
+test_excess (test_fix01.RetryAfter.test_excess) ... ok
+test_negative (test_fix01.RetryAfter.test_negative) ... ok
+test_positive (test_fix01.RetryAfter.test_positive) ... ok
+test_text (test_fix01.RetryAfter.test_text) ... ok
+test_zero (test_fix01.RetryAfter.test_zero) ... ok
+
+----------------------------------------------------------------------
+Ran 46 tests in 4.937s
+
+OK

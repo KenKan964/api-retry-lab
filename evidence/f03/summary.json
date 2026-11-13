@@ -1,0 +1,1162 @@
+{
+  "schema_version": "arl-f03-v1",
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "repeats": 10,
+  "seed": 1001,
+  "independent_import_check": true,
+  "executions": 80,
+  "all_passed": true,
+  "records": [
+    {
+      "iteration": 0,
+      "case": "normal_replay",
+      "mode": "oss",
+      "runtime_ms": 118.157514,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 0,
+      "case": "normal_replay",
+      "mode": "arl",
+      "runtime_ms": 89.667544,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 0,
+      "case": "response_loss",
+      "mode": "oss",
+      "runtime_ms": 117.097258,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 0,
+      "case": "response_loss",
+      "mode": "arl",
+      "runtime_ms": 89.159668,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 0,
+      "case": "duplicate",
+      "mode": "oss",
+      "runtime_ms": 85.722483,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 0,
+      "case": "duplicate",
+      "mode": "arl",
+      "runtime_ms": 66.145956,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 0,
+      "case": "payload_conflict",
+      "mode": "arl",
+      "runtime_ms": 69.857023,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 0,
+      "case": "payload_conflict",
+      "mode": "oss",
+      "runtime_ms": 90.49641,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 1,
+      "case": "normal_replay",
+      "mode": "oss",
+      "runtime_ms": 81.706507,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 1,
+      "case": "normal_replay",
+      "mode": "arl",
+      "runtime_ms": 71.064646,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 1,
+      "case": "response_loss",
+      "mode": "arl",
+      "runtime_ms": 59.879907,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 1,
+      "case": "response_loss",
+      "mode": "oss",
+      "runtime_ms": 91.776429,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 1,
+      "case": "duplicate",
+      "mode": "arl",
+      "runtime_ms": 62.623105,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 1,
+      "case": "duplicate",
+      "mode": "oss",
+      "runtime_ms": 79.85938,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 1,
+      "case": "payload_conflict",
+      "mode": "arl",
+      "runtime_ms": 75.109774,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 1,
+      "case": "payload_conflict",
+      "mode": "oss",
+      "runtime_ms": 81.403052,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 2,
+      "case": "normal_replay",
+      "mode": "oss",
+      "runtime_ms": 93.753707,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 2,
+      "case": "normal_replay",
+      "mode": "arl",
+      "runtime_ms": 68.328109,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 2,
+      "case": "response_loss",
+      "mode": "oss",
+      "runtime_ms": 93.624977,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 2,
+      "case": "response_loss",
+      "mode": "arl",
+      "runtime_ms": 59.516234,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 2,
+      "case": "duplicate",
+      "mode": "oss",
+      "runtime_ms": 81.675542,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 2,
+      "case": "duplicate",
+      "mode": "arl",
+      "runtime_ms": 59.590173,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 2,
+      "case": "payload_conflict",
+      "mode": "arl",
+      "runtime_ms": 68.115598,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 2,
+      "case": "payload_conflict",
+      "mode": "oss",
+      "runtime_ms": 80.028174,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 3,
+      "case": "normal_replay",
+      "mode": "oss",
+      "runtime_ms": 85.622786,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 3,
+      "case": "normal_replay",
+      "mode": "arl",
+      "runtime_ms": 60.504064,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 3,
+      "case": "response_loss",
+      "mode": "oss",
+      "runtime_ms": 91.040859,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 3,
+      "case": "response_loss",
+      "mode": "arl",
+      "runtime_ms": 63.156037,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 3,
+      "case": "duplicate",
+      "mode": "oss",
+      "runtime_ms": 80.534678,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 3,
+      "case": "duplicate",
+      "mode": "arl",
+      "runtime_ms": 66.295054,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 3,
+      "case": "payload_conflict",
+      "mode": "oss",
+      "runtime_ms": 79.173985,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 3,
+      "case": "payload_conflict",
+      "mode": "arl",
+      "runtime_ms": 63.01559,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 4,
+      "case": "normal_replay",
+      "mode": "arl",
+      "runtime_ms": 57.542897,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 4,
+      "case": "normal_replay",
+      "mode": "oss",
+      "runtime_ms": 88.099011,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 4,
+      "case": "response_loss",
+      "mode": "oss",
+      "runtime_ms": 92.596802,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 4,
+      "case": "response_loss",
+      "mode": "arl",
+      "runtime_ms": 62.176485,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 4,
+      "case": "duplicate",
+      "mode": "oss",
+      "runtime_ms": 80.408276,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 4,
+      "case": "duplicate",
+      "mode": "arl",
+      "runtime_ms": 60.585383,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 4,
+      "case": "payload_conflict",
+      "mode": "arl",
+      "runtime_ms": 59.047922,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 4,
+      "case": "payload_conflict",
+      "mode": "oss",
+      "runtime_ms": 79.965932,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 5,
+      "case": "normal_replay",
+      "mode": "arl",
+      "runtime_ms": 59.842894,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 5,
+      "case": "normal_replay",
+      "mode": "oss",
+      "runtime_ms": 79.532761,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 5,
+      "case": "response_loss",
+      "mode": "oss",
+      "runtime_ms": 81.243578,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 5,
+      "case": "response_loss",
+      "mode": "arl",
+      "runtime_ms": 57.517621,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 5,
+      "case": "duplicate",
+      "mode": "arl",
+      "runtime_ms": 61.245873,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 5,
+      "case": "duplicate",
+      "mode": "oss",
+      "runtime_ms": 82.945686,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 5,
+      "case": "payload_conflict",
+      "mode": "oss",
+      "runtime_ms": 82.027939,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 5,
+      "case": "payload_conflict",
+      "mode": "arl",
+      "runtime_ms": 61.269277,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 6,
+      "case": "normal_replay",
+      "mode": "arl",
+      "runtime_ms": 71.897519,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 6,
+      "case": "normal_replay",
+      "mode": "oss",
+      "runtime_ms": 79.62363,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 6,
+      "case": "response_loss",
+      "mode": "arl",
+      "runtime_ms": 57.012599,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 6,
+      "case": "response_loss",
+      "mode": "oss",
+      "runtime_ms": 75.821078,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 6,
+      "case": "duplicate",
+      "mode": "oss",
+      "runtime_ms": 76.654171,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 6,
+      "case": "duplicate",
+      "mode": "arl",
+      "runtime_ms": 64.346324,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 6,
+      "case": "payload_conflict",
+      "mode": "arl",
+      "runtime_ms": 67.130301,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 6,
+      "case": "payload_conflict",
+      "mode": "oss",
+      "runtime_ms": 82.420289,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 7,
+      "case": "normal_replay",
+      "mode": "oss",
+      "runtime_ms": 77.092354,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 7,
+      "case": "normal_replay",
+      "mode": "arl",
+      "runtime_ms": 60.913916,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 7,
+      "case": "response_loss",
+      "mode": "oss",
+      "runtime_ms": 84.764326,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 7,
+      "case": "response_loss",
+      "mode": "arl",
+      "runtime_ms": 76.543128,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 7,
+      "case": "duplicate",
+      "mode": "oss",
+      "runtime_ms": 84.908903,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 7,
+      "case": "duplicate",
+      "mode": "arl",
+      "runtime_ms": 62.732485,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 7,
+      "case": "payload_conflict",
+      "mode": "oss",
+      "runtime_ms": 77.679766,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 7,
+      "case": "payload_conflict",
+      "mode": "arl",
+      "runtime_ms": 58.415338,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 8,
+      "case": "normal_replay",
+      "mode": "oss",
+      "runtime_ms": 78.928079,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 8,
+      "case": "normal_replay",
+      "mode": "arl",
+      "runtime_ms": 61.429924,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 8,
+      "case": "response_loss",
+      "mode": "arl",
+      "runtime_ms": 58.865819,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 8,
+      "case": "response_loss",
+      "mode": "oss",
+      "runtime_ms": 80.142572,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 8,
+      "case": "duplicate",
+      "mode": "arl",
+      "runtime_ms": 59.719753,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 8,
+      "case": "duplicate",
+      "mode": "oss",
+      "runtime_ms": 77.060175,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 8,
+      "case": "payload_conflict",
+      "mode": "oss",
+      "runtime_ms": 80.772673,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 8,
+      "case": "payload_conflict",
+      "mode": "arl",
+      "runtime_ms": 57.297276,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 9,
+      "case": "normal_replay",
+      "mode": "oss",
+      "runtime_ms": 76.433355,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 9,
+      "case": "normal_replay",
+      "mode": "arl",
+      "runtime_ms": 60.474168,
+      "effects": 1,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [],
+      "passed": true
+    },
+    {
+      "iteration": 9,
+      "case": "response_loss",
+      "mode": "arl",
+      "runtime_ms": 56.370558,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 9,
+      "case": "response_loss",
+      "mode": "oss",
+      "runtime_ms": 102.992764,
+      "effects": 1,
+      "statuses": [
+        null
+      ],
+      "findings": [
+        "HOLD_UNKNOWN"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 9,
+      "case": "duplicate",
+      "mode": "oss",
+      "runtime_ms": 90.415788,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 9,
+      "case": "duplicate",
+      "mode": "arl",
+      "runtime_ms": 77.36228,
+      "effects": 2,
+      "statuses": [
+        200,
+        200
+      ],
+      "findings": [
+        "DUPLICATE_EFFECT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 9,
+      "case": "payload_conflict",
+      "mode": "oss",
+      "runtime_ms": 86.845727,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    },
+    {
+      "iteration": 9,
+      "case": "payload_conflict",
+      "mode": "arl",
+      "runtime_ms": 59.710084,
+      "effects": 1,
+      "statuses": [
+        200,
+        409
+      ],
+      "findings": [
+        "PAYLOAD_CONFLICT_DETECTED"
+      ],
+      "passed": true
+    }
+  ],
+  "human_work_seconds": null,
+  "median_ms": {
+    "arl": 61.3496005,
+    "oss": 81.6910245
+  },
+  "limits": [
+    "runtime includes spawn, HTTP, SQLite, diagnosis, cleanup; excludes final common result write",
+    "baseline writes its result internally; evidence overhead is not perfectly identical",
+    "four selected contracts only; no general false-positive/negative rate claim"
+  ]
+}

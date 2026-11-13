@@ -1,0 +1,22 @@
+{
+  "normal_replay": {
+    "arl_scenario": "sequential",
+    "requests": [{"amount": 7}, {"amount": 7}],
+    "effects": 1, "receipts": 1, "statuses": [200, 200], "replays": 1, "findings": []
+  },
+  "response_loss": {
+    "arl_scenario": "response_lost_after_commit",
+    "requests": [{"amount": 7, "drop": true}],
+    "effects": 1, "receipts": 1, "statuses": [null], "replays": 0, "findings": ["HOLD_UNKNOWN"]
+  },
+  "duplicate": {
+    "arl_scenario": "duplicate_mutant",
+    "requests": [{"amount": 7, "duplicate": true}, {"amount": 7, "duplicate": true}],
+    "effects": 2, "receipts": 1, "statuses": [200, 200], "replays": 0, "findings": ["DUPLICATE_EFFECT_DETECTED"]
+  },
+  "payload_conflict": {
+    "arl_scenario": "payload_conflict",
+    "requests": [{"amount": 7}, {"amount": 8}],
+    "effects": 1, "receipts": 1, "statuses": [200, 409], "replays": 0, "findings": ["PAYLOAD_CONFLICT_DETECTED"]
+  }
+}
