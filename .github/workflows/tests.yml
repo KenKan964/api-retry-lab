@@ -1,0 +1,33 @@
+name: local HTTP safety
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.11', '3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Acceptance and FIX-01 tests
+        env:
+          ARL_EVIDENCE: ci-fix01
+        run: python -m unittest discover -s tests -v
+      - run: python arl.py demo --out ci-evidence
+      - run: python compare.py --out ci-comparison --repeats 3
+      - run: python benchmark/measure_addition.py --out ci-addition
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-${{ matrix.os }}-${{ matrix.python }}
+          path: |
+            ci-evidence/
+            ci-fix01/
+            ci-comparison/
+            ci-addition/
