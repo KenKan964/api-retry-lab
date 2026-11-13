@@ -72,7 +72,7 @@ JSON/JSONLでHTTP観測・確定・再試行・独立DB照合を分けます。D
 分散システムのexactly-once、本番API、TLS、負荷試験、鍵の期限切れ、ディスク障害は対象外です。
 
 [技術仕様](TECHNICAL_SPEC.md)、[OSS比較](OSS_COMPARISON.md)、[是正報告](REPORT_ja.md)、
-[公開候補の名義・窓口](RELEASE_DECISIONS.md)。MITライセンスの著作権表示は、
+[公開方針・名義・窓口](RELEASE_DECISIONS.md)。MITライセンスの著作権表示は、
 公開者が指定した`KenKan964`に変更しています。第三者の権利や利用条件の確認は引き続き必要です。
 GitHub Private Vulnerability Reportingは窓口候補であり、現時点では未有効化です。
 API Retry LabのPrivateリポジトリは作成済みですが、Public化・正式リリースは未確認です。
