@@ -19,4 +19,5 @@ The release owner must confirm the contact before publication; see
 RELEASE_DECISIONS.md. No independent security audit is claimed.
 
 セキュリティ連絡方法はGitHubの非公開脆弱性報告を候補として提出しています。
-現時点では未有効化です。公開者が窓口とLICENSEを最終確認し、研究部審査・CI確認を経て公開可否を決定します。
+文書更新時点では未有効化です。公開者が窓口を設定し、LICENSEと更新コミットのCIを確認してから
+公開を判断します。6環境CIの成功はセキュリティ監査や本番安全性の証明ではありません。

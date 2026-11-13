@@ -1,11 +1,14 @@
-# API Retry Lab — v0.1.0／FIX-01公開候補
+# API Retry Lab — v0.1.0／実験版公開候補
 
 [English](README.md)。Python 3.11以上・標準ライブラリのみ・localhost限定。
 HTTP障害、再試行、合成業務効果の二重適用を検証します。既存23シナリオを維持しました。
 
-**GitHub公開はHOLDです。F04は研究部の指示により環境制約で保留。**
-Ubuntu／Windows×Python 3.11／3.12／3.13のCIは設定のみで、6ジョブすべて未実施と記録しています。
-ローカル試験の合格をGitHub Actionsの合格と読み替えません。
+**公開準備状況：** 2026年11月14日、GitHub ActionsでUbuntu／Windows × Python
+3.11／3.12／3.13の**6ジョブすべてが成功**しました。リポジトリ所有者が提示した
+実行#1の画面（コミット`6b5891d`）で確認しました。現時点のリポジトリはPrivateであり、
+Publicへの変更とv0.1.0公開は別途実施・確認する工程です。
+`evidence/ci_status.json`はCI実行前の**履歴資料**です。現在のCI確認結果は
+`evidence/ci_verified_20261114.json`を参照してください。CI成功は本番安全性の保証ではありません。
 
 ## クイックスタート
 
@@ -49,7 +52,9 @@ python3 benchmark/measure_addition.py --out addition-new
 
 PowerShellでは先に `$env:ARL_EVIDENCE='evidence-new'` を指定します。
 46試験をLinux Python 3.12.14／3.13.5で各46/46合格。既存23シナリオのデモも両環境で23/23一致。
-Windows・macOS・Python3.11は未検証。F04実行は保留しています。
+別途、GitHub ActionsのUbuntu／Windows × Python 3.11／3.12／3.13の6ジョブが成功しています
+（コミット`6b5891d`、実行#1）。macOSは未検証です。この文書修正後のコミットについては
+公開前にCIを再確認します。
 
 F02はポート初期化失敗、存在しない試験用実行ファイル、子の異常終了、準備待ちタイムアウト、
 レポート書込み失敗を注入。JSONと終了2、起動した子のwait回収、既存ファイル不変を確認します。
@@ -67,6 +72,8 @@ JSON/JSONLでHTTP観測・確定・再試行・独立DB照合を分けます。D
 分散システムのexactly-once、本番API、TLS、負荷試験、鍵の期限切れ、ディスク障害は対象外です。
 
 [技術仕様](TECHNICAL_SPEC.md)、[OSS比較](OSS_COMPARISON.md)、[是正報告](REPORT_ja.md)、
-[公開候補の名義・窓口](RELEASE_DECISIONS.md)。MITと著作権表記は公開者の最終確認用候補です。
-GitHub Private Vulnerability Reportingを窓口候補とし、未有効化であることを明記しています。
-GitHubへ公開していません。既存SQLite Fault Labリポジトリは変更していません。
+[公開方針・名義・窓口](RELEASE_DECISIONS.md)。MITライセンスの著作権表示は、
+公開者が指定した`KenKan964`に変更しています。第三者の権利や利用条件の確認は引き続き必要です。
+GitHub Private Vulnerability Reportingは窓口候補であり、現時点では未有効化です。
+API Retry LabのPrivateリポジトリは作成済みですが、Public化・正式リリースは未確認です。
+既存SQLite Fault Labのリポジトリは変更していません。

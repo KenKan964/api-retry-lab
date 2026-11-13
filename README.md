@@ -1,4 +1,4 @@
-# API Retry Lab — v0.1.0 / FIX-01 candidate
+# API Retry Lab — v0.1.0 (experimental pre-release candidate)
 
 [日本語](README_ja.md) · Python 3.11+ · standard library only · localhost only
 
@@ -6,9 +6,14 @@ Reproduce HTTP response loss, retry and duplicate synthetic business effects.
 Independent of SQLite Fault Lab and Data Transfer Guard. No external API target,
 telemetry, production data, credentials or proxy feature.
 
-**Publication is HOLD.** F04 (GitHub Actions: Ubuntu/Windows × 3.11/3.12/3.13)
-is deferred by the research department because of environment constraints.
-Every CI job is recorded as NOT_RUN. Local test results are not CI results.
+**Release status:** GitHub Actions CI for Ubuntu and Windows × Python 3.11,
+3.12 and 3.13 **passed all six jobs** on 2026-11-14 (JST), as observed in
+the repository owner's GitHub Actions run #1 screenshot (commit `6b5891d`).
+The source repository was **Private** at this documentation update; public
+visibility and the `v0.1.0` release are separate, not-yet-confirmed steps.
+`evidence/ci_status.json` is the **historical pre-CI snapshot**, not the
+current result. See `evidence/ci_verified_20261114.json` for the post-run record.
+CI verifies the specified tests, not production API safety or commercial value.
 
 ## Quick start
 
@@ -72,9 +77,12 @@ it does not import ARL or its oracle. Four cases are compared: normal replay,
 post-commit response loss, duplicate effect, payload conflict. Addition
 experiment executes a third identical request using fresh modified copies.
 
-Locally measured: Linux Python 3.12.14 and 3.13.5, **46/46 tests each**; original
-23-scenario demo passes on both. Windows, macOS and Python 3.11 remain
-unverified. Six GitHub CI jobs are configured but **none has run**.
+Local pre-CI results: Linux Python 3.12.14 and 3.13.5, **46/46 tests each**;
+original 23-scenario demo passed on both. Separately, the GitHub Actions
+**six-job matrix passed** on Ubuntu/Windows × Python 3.11/3.12/3.13 at
+commit `6b5891d` (run #1, screenshot supplied by repository owner).
+macOS remains untested. The documentation changes made after that run must
+pass CI again before public release.
 
 ## Scope
 
@@ -92,6 +100,8 @@ or disk-failure guarantee. All-state exactly-once, human savings and commercial
 demand are not established. Comparison timings do not prove product superiority.
 
 See TECHNICAL_SPEC.md, OSS_COMPARISON.md, REPORT_ja.md and RELEASE_DECISIONS.md.
-MIT and copyright text remain publisher-confirmable candidates. Private GitHub
-vulnerability reporting is the proposed contact, not an active endpoint yet.
-Neither a public release nor a private GitHub repository has been created.
+MIT License with the owner's chosen copyright attribution `KenKan964`;
+third-party rights and license compliance remain the publisher's responsibility.
+GitHub Private Vulnerability Reporting is a **proposed** security contact and
+has not been confirmed enabled. A Private GitHub repository exists; neither
+public visibility nor the public `v0.1.0` release has been confirmed.
