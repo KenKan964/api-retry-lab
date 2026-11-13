@@ -1,0 +1,48 @@
+{
+  "record_type": "github_actions_observation",
+  "observation_date_jst": "2026-11-14",
+  "source": "repository_owner_supplied_actions_run_screenshot",
+  "workflow_file": ".github/workflows/tests.yml",
+  "workflow_run_number": 1,
+  "workflow_run_id": null,
+  "commit_sha_prefix": "6b5891d",
+  "conclusion": "success",
+  "matrix_jobs": [
+    {
+      "os": "ubuntu-latest",
+      "python": "3.11",
+      "status": "SUCCESS"
+    },
+    {
+      "os": "ubuntu-latest",
+      "python": "3.12",
+      "status": "SUCCESS"
+    },
+    {
+      "os": "ubuntu-latest",
+      "python": "3.13",
+      "status": "SUCCESS"
+    },
+    {
+      "os": "windows-latest",
+      "python": "3.11",
+      "status": "SUCCESS"
+    },
+    {
+      "os": "windows-latest",
+      "python": "3.12",
+      "status": "SUCCESS"
+    },
+    {
+      "os": "windows-latest",
+      "python": "3.13",
+      "status": "SUCCESS"
+    }
+  ],
+  "total_jobs": 6,
+  "successful_jobs": 6,
+  "archived_prior_snapshot": "evidence/ci_status.json",
+  "provenance_note": "Result observed from user-provided screenshot. No raw per-job logs or full run ID were available to this evidence record.",
+  "current_commit_limitation": "Successful run applies to commit 6b5891d; documentation changes made afterward require a new CI run.",
+  "publication_note": "The repository was private at the time of document revision. Public visibility and v0.1.0 release not confirmed."
+}
