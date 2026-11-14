@@ -1,79 +1,115 @@
-# API Retry Lab — v0.1.0／実験版公開候補
+# API Retry Lab
 
-[English](README.md)。Python 3.11以上・標準ライブラリのみ・localhost限定。
-HTTP障害、再試行、合成業務効果の二重適用を検証します。既存23シナリオを維持しました。
+**HTTP通信の失敗・再試行によって業務処理が二重適用される問題を、ローカル環境で再現・検証するツールです。**
 
-**公開準備状況：** 2026年11月14日、GitHub ActionsでUbuntu／Windows × Python
-3.11／3.12／3.13の**6ジョブすべてが成功**しました。リポジトリ所有者が提示した
-実行#1の画面（コミット`6b5891d`）で確認しました。現時点のリポジトリはPrivateであり、
-Publicへの変更とv0.1.0公開は別途実施・確認する工程です。
-`evidence/ci_status.json`はCI実行前の**履歴資料**です。現在のCI確認結果は
-`evidence/ci_verified_20261114.json`を参照してください。CI成功は本番安全性の保証ではありません。
+**v0.1.0 — 実験版 · Python 3.11以降 · 標準ライブラリのみ · localhost限定 · MITライセンス**
 
-## クイックスタート
+[English](README.md) | **日本語** · [v0.1.0 Pre-release](https://github.com/KenKan964/api-retry-lab/releases/tag/v0.1.0)
 
-```bash
-python3 arl.py demo --out my-run-001
-python3 arl.py run --scenario safe_replay --out my-run-002
-python3 arl.py list
-python3 -m unittest discover -s tests -v
+## 何を解決するツールか
+
+HTTP要求がサーバーで確定された**後**に応答が失われると、クライアントは処理が成功したか分からなくなります。その状態で異なる冪等性キーを使って再送すると、同じ業務効果が二重に発生することがあります。
+
+API Retry Labは、そのような状況を**合成のローカルHTTPサーバー**で再現する無料の検証ツールです。`127.0.0.1`上で意図的に障害を起こし、再送時のHTTP観測とSQLiteに記録された業務効果を分けて確認します。
+
+> **対象範囲：** ローカルの合成データによる実験環境です。本番APIを診断・修復するツールではなく、分散システムでのexactly-once処理を保証しません。
+
+## 検証できること
+
+| シナリオ | 検証する問題 |
+| --- | --- |
+| 確定後の応答喪失 | 応答がなくてもサーバーで処理済みの場合がある |
+| `safe_replay` | 別HTTP要求で読戻した後、同じキーで再送して効果が1件に保たれる |
+| `unsafe_retry` | 別キーで再送すると意図的に業務効果が2件となり、欠陥を検出できる |
+| ペイロードの不一致 | 同一キーと異なる内容の組合せを拒否する |
+| タイムアウト・接続異常 | 未確認の応答と確定済みの処理を区別する |
+| HTTP 429・503 | 再試行・保留の判断を確認する |
+| 並行要求 | 4件の同時要求に対する二重適用防止を検証する |
+| 再起動・意図的欠陥 | 再起動後の再送と、不正な実装の検出を試験する |
+
+既定で**23種類のシナリオ**を備えています。すべての名称は`python arl.py list`で確認できます。
+
+## 最初に試す
+
+**必要環境：** Python 3.11以降。pipでの追加インストールや外部サービス、認証情報は不要です。
+
+リポジトリのルートディレクトリで実行します。
+
+```sh
+python arl.py list
+python arl.py demo --out demo-001
+python arl.py run --scenario safe_replay --out replay-001
+python arl.py run --scenario unsafe_retry --out duplicate-001
 ```
 
-Windows PowerShellでは `python3` を `py -3` に置き換えます。Python以外のインストールは不要。
-出力先は未作成ディレクトリを指定し、親ディレクトリは事前に作成してください。
-既存先は拒否します。終了0＝期待判定一致、1＝不一致、2＝INVALID_TEST／入力・起動・実行・出力異常。
-出力先を作成／保存できないときはstdoutのJSONと終了2で報告します。
-既存ファイルへエラーJSONを上書きしません。保存途中の不完全ファイルは合格証拠ではありません。
+Windowsでは必要に応じて`python`を`py -3`に置き換えてください。毎回**未使用の出力ディレクトリ**を指定してください。既存先は拒否され、親ディレクトリは事前に存在する必要があります。
 
-safe_replayは確定後応答喪失→UNKNOWN→別HTTP要求の読戻し→同じキー再送で効果1を確認します。
-unsafe_retryは意図的に別キーで再送し、効果2と危険再送を検出します。
-欠陥例のpassed=trueは「欠陥検出成功」であり、その処理が安全という意味ではありません。
+HTTPサーバーはツールが起動・終了します。外部URLは指定できません。
 
-## Retry-After
+## 結果をどう読むか
 
-```bash
-python3 arl.py run --scenario 429_valid --retry-after 1 --out my-run-wait
-python3 arl.py run --scenario 429_valid --retry-after=-1 --out my-run-hold
+代表的な2例：
+
+- **`safe_replay`：** 合成業務処理の確定後に応答が失われ、クライアントは結果不明となります。別のHTTP要求による読戻しと**同一キー**での再送を行っても、業務効果は**1件**です。
+- **`unsafe_retry`：** 意図的に**異なるキー**で再送すると業務効果が**2件**発生し、その危険な再送を検出します。
+
+シナリオ結果の`passed: true`は、**観測結果が試験の期待値に一致した**という意味です。危険な再送の安全性を示すものではありません。
+
+出力ディレクトリには、JSONによるケース結果、クライアントの`trace.jsonl`、サーバーの`server.jsonl`、stderrログ、SQLiteの証拠などが残ります。**テスト側がDBの確定結果を知っていることと、HTTPクライアントが処理結果を確認できたことは異なります。**
+
+**CLI終了コード：**
+
+| コード | 意味 |
+| --- | --- |
+| `0` | 観測結果が期待値と一致（意図的な欠陥を正しく検出した場合も含む） |
+| `1` | 期待する観測結果との不一致 |
+| `2` | `INVALID_TEST`：入力、起動、環境、証拠出力などの失敗 |
+
+クライアント側の`UNKNOWN`や`HOLD_UNKNOWN`が**期待どおりの試験結果**であれば、終了コードは0になり得ます。コードだけで業務成功と判断せず、診断と通信履歴を確認してください。
+
+## Retry-Afterの対応範囲
+
+HTTP 429の`Retry-After`には、ASCII数字による整数秒の**`0`と`1`のみ**対応します。単調時計で待機を計測し、再試行は**最大1回**（POSTは最大2回）です。
+
+```sh
+python arl.py run --scenario 429_valid --retry-after 1 --out retry-wait-001
+python arl.py run --scenario 429_valid --retry-after=-1 --out retry-hold-001
 ```
 
-ASCII非負整数秒の0と1に対応。上限1秒、最大2回のPOST（再試行1回）。
-正の1秒・0秒を実際に待ち、単調時計で経過時間と再試行回数を記録します。
-上限超過、負数、空文字、不正文字列、HTTP日付はHOLD_UNKNOWN・待機なし・再試行なし。
-HTTP日付は未対応と明示したうえで安全に保留します。7形式すべて実HTTPで検証しました。
-保留が期待どおりなら試験の終了は0ですが、業務安全判定はHOLD_UNKNOWNのままです。
+1秒超、負数、空文字、数値以外の文字列、HTTP日付形式などは、**再試行せず`HOLD_UNKNOWN`**として保留します。正しく保留できた試験が合格しても、元の業務処理の成功を意味しません。
 
-## 再現・追加試験
+## 試験・検証状況
 
-```bash
-ARL_EVIDENCE=evidence-new python3 -m unittest discover -s tests -v
-python3 compare.py --out comparison-new --repeats 10
-python3 benchmark/measure_addition.py --out addition-new
+FIX-01時点で**46件の自動試験**、23種類のシナリオ、独立したHTTP/SQLite実装との比較があります。比較実験では4条件・80実行の期待判定が一致しましたが、検出性能・実行速度・人間の工数・商用価値が優れていることを示す結果ではありません。
+
+**GitHub Actions：Ubuntu・Windows × Python 3.11／3.12／3.13の6環境すべて成功**。公開済み`main`に対する[実行#14](https://github.com/KenKan964/api-retry-lab/actions/runs/43466471108)で確認しました。このREADME以後の修正については[最新のActions](https://github.com/KenKan964/api-retry-lab/actions)を参照してください。
+
+```sh
+python -m unittest discover -s tests -v
+python compare.py --out comparison-001 --repeats 10
+python benchmark/measure_addition.py --out addition-001
 ```
 
-PowerShellでは先に `$env:ARL_EVIDENCE='evidence-new'` を指定します。
-46試験をLinux Python 3.12.14／3.13.5で各46/46合格。既存23シナリオのデモも両環境で23/23一致。
-別途、GitHub ActionsのUbuntu／Windows × Python 3.11／3.12／3.13の6ジョブが成功しています
-（コミット`6b5891d`、実行#1）。macOSは未検証です。この文書修正後のコミットについては
-公開前にCIを再確認します。
+比較実験と追加実験には新しい出力先を指定してください。`evidence/ci_status.json`の`NOT_RUN`は**CI導入前の履歴**であり、現在の実行状況ではありません。
 
-F02はポート初期化失敗、存在しない試験用実行ファイル、子の異常終了、準備待ちタイムアウト、
-レポート書込み失敗を注入。JSONと終了2、起動した子のwait回収、既存ファイル不変を確認します。
-このフックはローカル負例試験専用で、任意ホスト・コマンド・PIDを受け付けません。
+## 安全上の注意と制限
 
-F03のOSS基準はHTTPサーバー・クライアント・DB・判定を独立実装し、ARLもoracle.pyもimportしません。
-4シナリオ×2方式×10回の80実行が一致。追加シナリオを実際に作成し、コード・設定差分も保存しました。
-機械時間や行数を人間工数へ換算していません。工数削減、ROI、商用需要は未実証です。
+- **localhost上の合成データ専用。** 公開ネットワークでの待受、本番API接続、TLS、プロキシ、テレメトリ、実アカウントの認証情報は扱いません。
+- サンプルは固定の合成`operation_id`と整数の`amount`、ローカルの冪等性キーを使います。普遍的な`Idempotency-Key`仕様への準拠宣言ではありません。
+- HTTP上の結果不明とDB上の確定を区別します。**分散環境でのexactly-onceを保証しません。**
+- タイムアウトや障害注入は制御された実験であり、任意のOS負荷、電源断、実ディスク障害での安全性は未検証です。
+- 侵入試験、性能負荷試験、汎用HTTPライブラリを目的とする製品ではありません。
+- 機密データを証拠に含めないでください。試験用故障フックは任意のホスト・コマンド・PIDを受け付けません。
 
-## 範囲と公開候補
+## 関連資料
 
-JSON/JSONLでHTTP観測・確定・再試行・独立DB照合を分けます。DBオラクルの知識をクライアントの確定知識にしません。
-キーは英数字等1～64文字、operation_idはop-001固定、amountは整数。キー契約は本製品独自のものです。
-タイムアウトは確定後の制御遅延で再現しますが、極端なスケジューリング遅延まで保証しません。
-分散システムのexactly-once、本番API、TLS、負荷試験、鍵の期限切れ、ディスク障害は対象外です。
+- [English README](README.md)
+- [技術仕様](TECHNICAL_SPEC.md)
+- [セキュリティ上の注意](SECURITY.md)
+- [独立比較と限界](OSS_COMPARISON.md)
+- [公開前判断の履歴](RELEASE_DECISIONS.md)
+- [検証報告書](REPORT_ja.md)
+- [変更履歴](CHANGELOG.md)
+- [MITライセンス](LICENSE)
 
-[技術仕様](TECHNICAL_SPEC.md)、[OSS比較](OSS_COMPARISON.md)、[是正報告](REPORT_ja.md)、
-[公開方針・名義・窓口](RELEASE_DECISIONS.md)。MITライセンスの著作権表示は、
-公開者が指定した`KenKan964`に変更しています。第三者の権利や利用条件の確認は引き続き必要です。
-GitHub Private Vulnerability Reportingは窓口候補であり、現時点では未有効化です。
-API Retry LabのPrivateリポジトリは作成済みですが、Public化・正式リリースは未確認です。
-既存SQLite Fault Labのリポジトリは変更していません。
+**ライセンス：** MIT · Copyright © 2026 KenKan964.
