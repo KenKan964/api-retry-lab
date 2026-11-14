@@ -11,13 +11,20 @@ new laboratory directories. Never deploy this server to an exposed interface.
 Parent SIGKILL, host/power failure and malicious concurrent filesystem changes
 are outside cleanup guarantees. No cross-system exactly-once claim is made.
 
-**Proposed private reporting channel:** GitHub Private Vulnerability Reporting
-(Security → Report a vulnerability), after the repository owner enables it.
-It is not configured yet. No email address or working reporting endpoint is
-claimed. Do not disclose sensitive reports or real payloads in public issues.
-The release owner must confirm the contact before publication; see
-RELEASE_DECISIONS.md. No independent security audit is claimed.
+**Security reporting:** This repository is public and v0.1.0 is an
+experimental pre-release. GitHub Private Vulnerability Reporting is the
+proposed channel, but its activation has **not been independently verified**.
+If the repository's Security tab offers “Report a vulnerability”, use that
+private channel. Do not include security-sensitive details, private data,
+or real credentials in public issues. No alternative private contact is
+claimed here. No independent security audit has been performed.
 
-セキュリティ連絡方法はGitHubの非公開脆弱性報告を候補として提出しています。
-文書更新時点では未有効化です。公開者が窓口を設定し、LICENSEと更新コミットのCIを確認してから
-公開を判断します。6環境CIの成功はセキュリティ監査や本番安全性の証明ではありません。
+GitHub Actions passed six jobs for the published main-branch
+[run #14](https://github.com/KenKan964/api-retry-lab/actions/runs/43466471108).
+Check newer workflow runs for later changes. CI does not prove production
+resilience, security isolation, or cross-system exactly-once guarantees.
+
+**日本語：** リポジトリとv0.1.0実験版は公開済みです。非公開の脆弱性報告機能は
+候補ですが、有効化は独立確認できていません。Securityタブに非公開報告がある
+場合はそれを利用し、機密情報を公開Issueに書かないでください。6環境CIの成功は
+独立セキュリティ監査や本番での安全性の証明ではありません。

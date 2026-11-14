@@ -1,107 +1,115 @@
-# API Retry Lab — v0.1.0 (experimental pre-release candidate)
+# API Retry Lab
 
-[日本語](README_ja.md) · Python 3.11+ · standard library only · localhost only
+**Reproduce HTTP retry failures and inspect whether a repeated request creates duplicate business effects.**
 
-Reproduce HTTP response loss, retry and duplicate synthetic business effects.
-Independent of SQLite Fault Lab and Data Transfer Guard. No external API target,
-telemetry, production data, credentials or proxy feature.
+**v0.1.0 — Experimental · Python 3.11+ · Standard library only · Localhost only · MIT License**
 
-**Release status:** GitHub Actions CI for Ubuntu and Windows × Python 3.11,
-3.12 and 3.13 **passed all six jobs** on 2026-11-14 (JST), as observed in
-the repository owner's GitHub Actions run #1 screenshot (commit `6b5891d`).
-The source repository was **Private** at this documentation update; public
-visibility and the `v0.1.0` release are separate, not-yet-confirmed steps.
-`evidence/ci_status.json` is the **historical pre-CI snapshot**, not the
-current result. See `evidence/ci_verified_20261114.json` for the post-run record.
-CI verifies the specified tests, not production API safety or commercial value.
+**English** | [日本語](README_ja.md) · [v0.1.0 pre-release](https://github.com/KenKan964/api-retry-lab/releases/tag/v0.1.0)
+
+## Why use it?
+
+An HTTP client can time out **after** a server has committed an operation. The client may not know whether the operation succeeded. Blindly retrying with a different idempotency key can apply the same business effect twice.
+
+API Retry Lab is a **free, reproducible local laboratory** for studying that situation. It starts a synthetic HTTP server on `127.0.0.1`, simulates failures at known points, replays requests, and compares the client's observations with the effects recorded in a local SQLite database.
+
+This is a test harness for understanding retry and idempotency behavior, **not** a tool that connects to, repairs, or guarantees the safety of your production APIs.
+
+## What can you test?
+
+| Scenario | What it demonstrates |
+| --- | --- |
+| Response lost after commit | The server may have applied an operation even though the client did not receive a response |
+| `safe_replay` | Read back over HTTP, then retry with the same key; one effect is retained |
+| `unsafe_retry` | Retry with a different key; a deliberate duplicate effect is detected |
+| Payload conflict | Reusing a key for a different payload is rejected |
+| Timeouts / connection errors | Distinguish a failed observation from a confirmed operation |
+| 429 / 503 responses | Exercise bounded retry and hold decisions |
+| Concurrent requests | Exercise duplicate-effect protection under four parallel requests |
+| Restart and mutants | Replay after restart and detect intentionally broken implementations |
+
+The suite contains **23 defined scenarios**. Use `python arl.py list` to see their exact names.
 
 ## Quick start
 
-From the extracted directory, using a fresh output name each time:
+**Requirements:** Python 3.11 or newer; no pip packages, external service, credentials, or network access beyond loopback.
 
-```bash
-python3 arl.py demo --out my-run-001
-python3 arl.py run --scenario safe_replay --out my-run-002
-python3 arl.py list
-python3 -m unittest discover -s tests -v
+From the repository root:
+
+```sh
+python arl.py list
+python arl.py demo --out demo-001
+python arl.py run --scenario safe_replay --out replay-001
+python arl.py run --scenario unsafe_retry --out duplicate-001
 ```
 
-On Windows PowerShell replace `python3` with `py -3`. Python must already be
-installed; no pip packages or additional services are needed. Parent output
-directory must exist. The tool refuses existing output directories.
+On Windows, use `py -3` instead of `python` if needed. Supply a **new output directory** for each command; existing destinations are refused, and the parent directory must already exist.
 
-Exit 0 means all expected observations match; 1 means a mismatch; 2 means
-INVALID_TEST / input, environment, startup or report-write failure. Output
-creation/write errors are reported as a JSON object on stdout with exit 2;
-existing files are not overwritten. Partial files after write failures are not
-successful evidence. Internal `_server` startup exceptions also emit JSON/2.
+The local HTTP service is started and stopped by the tool. No external URL is accepted.
 
-The existing 23 scenarios are preserved. For example `safe_replay` loses the
-response after commit, observes UNKNOWN, reads back in another HTTP request,
-then replays the same key: effect count stays 1. `unsafe_retry` intentionally
-uses another key, creates two effects and detects the defect. Its `passed=true`
-means successful negative-control detection, not safe business behaviour.
+## Interpreting the results
 
-## FIX-01 Retry-After contract
+Two important examples:
 
-```bash
-python3 arl.py run --scenario 429_valid --retry-after 1 --out my-run-wait
-python3 arl.py run --scenario 429_valid --retry-after=-1 --out my-run-hold
+- **`safe_replay`:** The synthetic operation is committed, its response is lost, the client observes an unknown outcome, a separate HTTP readback is performed, and replay with the **same key** retains **one** business effect.
+- **`unsafe_retry`:** An intentionally unsafe retry uses a **different key** and creates **two** effects. The lab correctly identifies the defect.
+
+A test scenario's `passed: true` means **the observed outcome matched the test expectation**. In particular, it does **not** mean the unsafe scenario is safe.
+
+Look inside the output directory for the JSON case results, client `trace.jsonl`, server `server.jsonl`, stderr logs, and SQLite evidence. HTTP observations and the database's actual effects are kept separate: **a database check by the test harness must not be presented as knowledge the HTTP client already had.**
+
+**CLI exit codes:**
+
+| Code | Meaning |
+| --- | --- |
+| `0` | Expected test observations matched (including successful detection of an intentionally unsafe case) |
+| `1` | A test expectation did not match the observation |
+| `2` | `INVALID_TEST`: invalid inputs, startup, environment, or evidence-output failure |
+
+A client-side `UNKNOWN` or `HOLD_UNKNOWN` may still be a **correctly observed test outcome** with exit code 0. Always read the findings and trace, not just the process exit code.
+
+## Retry-After: deliberately narrow support
+
+The laboratory supports HTTP 429 `Retry-After` values of **ASCII integer seconds `0` or `1`** only. It waits using a monotonic clock and makes **at most one retry** (two POST attempts in total).
+
+```sh
+python arl.py run --scenario 429_valid --retry-after 1 --out retry-wait-001
+python arl.py run --scenario 429_valid --retry-after=-1 --out retry-hold-001
 ```
 
-ASCII unsigned integer seconds **0 or 1** are supported. Cap is 1 second.
-Positive 1-second and zero waits are measured with a monotonic clock; actual
-wait duration and retry count are in the case trace. At most one retry (two
-POST attempts) occurs. Values greater than 1, negative values, empty strings,
-non-numeric text and HTTP dates cause HOLD_UNKNOWN and no retry. HTTP date
-support is deliberately excluded. The seven forms are exercised through real
-HTTP 429 responses. A safely held unsupported value matches its expected test
-outcome and therefore exits 0, while its safety finding remains HOLD_UNKNOWN.
+Values outside this supported contract — including integers above 1, negative values, empty values, text, and HTTP-date formats — produce a **`HOLD_UNKNOWN` decision without a retry**. An expected hold is not evidence that the original business operation succeeded.
 
-## Evidence and reproducibility
+## Verification
 
-`summary.json` and case `result.json`, client `trace.jsonl`, server
-`server.jsonl`, stderr logs and SQLite state separate HTTP observations from
-persisted effects. A test-harness DB read does not automatically resolve client
-UNKNOWN. Raw synthetic keys and payloads are not personal data.
+The repository includes **46 automated tests** (as recorded for the FIX-01 release candidate), the 23-scenario demo, and an independent HTTP/SQLite comparison. The comparison covers four cases and 80 executions in its recorded local experiment; it is not proof of superior detection, speed, reduced human effort, or commercial value.
 
-```bash
-ARL_EVIDENCE=evidence-new python3 -m unittest discover -s tests -v
-python3 compare.py --out comparison-new --repeats 10
-python3 benchmark/measure_addition.py --out addition-new
+**GitHub Actions:** Ubuntu and Windows × Python 3.11, 3.12, 3.13 — **all six jobs passed** on the published main-branch validation [run #14](https://github.com/KenKan964/api-retry-lab/actions/runs/43466471108). Check [Actions](https://github.com/KenKan964/api-retry-lab/actions) for the latest status, including changes after this README.
+
+```sh
+python -m unittest discover -s tests -v
+python compare.py --out comparison-001 --repeats 10
+python benchmark/measure_addition.py --out addition-001
 ```
 
-PowerShell: set `$env:ARL_EVIDENCE='evidence-new'` before the test command.
-The comparison baseline has its own HTTP server, client, database and checks;
-it does not import ARL or its oracle. Four cases are compared: normal replay,
-post-commit response loss, duplicate effect, payload conflict. Addition
-experiment executes a third identical request using fresh modified copies.
+The comparison and addition experiment create new output directories; use fresh names. `evidence/ci_status.json` is a **historical pre-CI snapshot** rather than the present status.
 
-Local pre-CI results: Linux Python 3.12.14 and 3.13.5, **46/46 tests each**;
-original 23-scenario demo passed on both. Separately, the GitHub Actions
-**six-job matrix passed** on Ubuntu/Windows × Python 3.11/3.12/3.13 at
-commit `6b5891d` (run #1, screenshot supplied by repository owner).
-macOS remains untested. The documentation changes made after that run must
-pass CI again before public release.
+## Boundaries and safety
 
-## Scope
+- **Synthetic loopback workloads only:** no public listening address, remote API adapter, TLS, proxy, telemetry, or production credentials.
+- The sample contract accepts a fixed synthetic `operation_id`, integer `amount`, and locally scoped idempotency keys. This does **not** establish a general Idempotency-Key standard.
+- The experiment separates HTTP uncertainty from database state. It **does not guarantee exactly-once execution across distributed systems**.
+- Retry timing and process-fault injection are controlled test conditions, not guarantees under arbitrary scheduler delays, host crashes, or disk failures.
+- This is not a penetration-testing tool, production load tester, or universal HTTP resilience library.
+- Keep output artifacts free of real or confidential payloads. Test-only fault hooks do not accept arbitrary hosts, commands, or PIDs.
 
-Keys are ASCII letters/digits/underscore/hyphen, 1–64 characters. Same key and
-same canonical JSON payload reuses a result; conflicting payload returns 409.
-This is a project-specific contract, not a declaration that an Idempotency-Key
-draft is a final standard. The sample accepts operation_id `op-001` and integer
-amount, with atomic key check and effect insert in SQLite.
+## Documentation
 
-Timeout scenario uses a controlled post-commit delay; extreme scheduler load
-can still affect timing. Retry waits are lower-bounded by the requested value,
-not exact real-time scheduling. Parallel scenario sends four requests together.
-No TLS, arbitrary API adapter, distributed transaction, key expiry, load test
-or disk-failure guarantee. All-state exactly-once, human savings and commercial
-demand are not established. Comparison timings do not prove product superiority.
+- [日本語 README](README_ja.md)
+- [Technical specification](TECHNICAL_SPEC.md)
+- [Security considerations](SECURITY.md)
+- [Comparison scope and limitations](OSS_COMPARISON.md)
+- [Release notes and decisions (historical pre-publication record)](RELEASE_DECISIONS.md)
+- [Developer verification report](REPORT_ja.md)
+- [Change history](CHANGELOG.md)
+- [MIT License](LICENSE)
 
-See TECHNICAL_SPEC.md, OSS_COMPARISON.md, REPORT_ja.md and RELEASE_DECISIONS.md.
-MIT License with the owner's chosen copyright attribution `KenKan964`;
-third-party rights and license compliance remain the publisher's responsibility.
-GitHub Private Vulnerability Reporting is a **proposed** security contact and
-has not been confirmed enabled. A Private GitHub repository exists; neither
-public visibility nor the public `v0.1.0` release has been confirmed.
+**License:** MIT · Copyright © 2026 KenKan964.
